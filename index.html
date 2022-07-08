@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+
+<body>
+<div class="container">
+    <div class="rom">
+        <div class="col-12">
+            <h1 class="alert alert - dark" style="color: #ff1500; text-align: center">ỏ ỏ ỏ ỏ ỏ ỏ ỏ ỏ Students ỏ ỏ ỏ ỏ ỏ ỏ ỏ ỏ</h1>
+<!--            <input id="newStudent" type="text">-->
+<!--            <button onclick="createStudent()">Create Student</button>-->
+
+            <div class="input-group mb-3">
+                <input id="newStudent" type="text" class="form-control" placeholder=".&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;" aria-label="Recipient's Usernam" aria-describedby="basic-addon2">
+                <div class="input-group-prepend" onclick="createStudent()">
+                    <span style="color: #989898; background-color: #070707 " class="input-group-text" id="inputGroup-sizing-default"><i class="bi bi-search"></i> &nbsp;Thêm</span>
+                </div>
+            </div>
+
+
+            <div class="input-group mb-3">
+                <input id="search" type="text" class="form-control" placeholder=".&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;" aria-label="Recipient's Usernam" aria-describedby="basic-addon2" oninput="actionSearch()">
+                <div class="input-group-prepend" onclick="createStudent()">
+                    <span style="color: #989898; background-color: #070707 " class="input-group-text"><i class="bi bi-search"></i> &nbsp;Thêm</span>
+                </div>
+            </div>
+
+            <span id="validate"></span>
+            <table class="table table-hover table-dark" border="1" style="width: 100%; text-align: center">
+                <th>STT</th>
+                <th>NAME</th>
+                <th>EDIT</th>
+                <th>DELETE</th>
+                <tbody id="drawTable">
+                </tbody>
+            </table>
+        </div>
+
+        <h1 style="color: #ff0000; text-align: center">
+        <script>
+            let listStudents = ['Ba', 'Ha', 'Phu', 'Duc', 'Hung', 'Dat']
+            let listSearch = [];
+
+            function showListStdent() {
+                let drawTable = '';
+                for (let i = 0; i < listStudents.length; i++) {
+                    let j = i + 1;
+                    drawTable += `<tr>
+                        <td>${j}</td>
+                        <td>${listStudents[i]}</td>
+                        <td><button class="btn btn-light" style="background-color: whitesmoke; color: #8500ff; border-radius: 5%" onclick="updateStudent(${i})"><i class="bi bi-pencil-square"></i>Edit</button></td>
+                         <td><button class="btn btn-light" style="background-color: whitesmoke; color: #ff0000; border-radius: 5%" onclick="deleteStudent(${i})"><i class="bi bi-x-square"></i>Delete</button></td>
+                        </tr>`
+                }
+                document.getElementById('drawTable').innerHTML = drawTable;
+            }
+
+            showListStdent();
+
+            function createStudent() {
+                let newStudent = document.getElementById('newStudent').value;
+                if (newStudent.trim() === '') {
+                    document.getElementById('validate').innerHTML = '<span style="color: red">The name is required! Please try again!</span>'
+                } else {
+                    console.log('newStudent ===>', newStudent)
+                    listStudents.push(newStudent);
+                    document.getElementById('validate').innerHTML = '<span style="color: blue">Create Success!!</span>'
+                    showListStdent();
+                }
+            }
+
+            function updateStudent(id) {
+                console.log('id ===========', id)
+                let editStudent = prompt('Enter the name to update Student', listStudents[id])
+                if (editStudent.trim() === '') {
+                    document.getElementById('validate').innerHTML = '<span style="color: red">The name is required! Please try again!</span>'
+                } else {
+                    listStudents[id] = editStudent;
+                    document.getElementById('validate').innerHTML = '<span style="color: blueviolet">Update Success!!</span>'
+                    showListStdent();
+                }
+            }
+
+            function deleteStudent(id) {
+                listStudents.splice(id, 1)
+                showListStdent()
+            }
+
+            function showListSearch() {
+                let drawTable = '';
+                for (let i = 0; i < listSearch.length; i++) {
+                    let j = i + 1;
+                    // drawTable+= '<tr>'+
+                    //     '<td>'+j+'</td>'+
+                    //     '<td>'+listStudents[i]+'</td>'
+                    // +'</tr>'
+
+                    drawTable += `<tr>
+                        <td>${j}</td>
+                        <td>${listSearch[i]}</td>
+                        <td><button style="background-color: blue; color: white; border-radius: 20%" onclick="updateStudent(${i})">Edit</button></td>
+                         <td><button style="background-color: red; color: white; border-radius: 20%" onclick="deleteStudent(${i})">Delete</button></td>
+                        </tr>`
+                }
+                document.getElementById('drawTable').innerHTML = drawTable;
+            }
+
+            function actionSearch() {
+                let search = document.getElementById('search').value;
+                listSearch = [];
+                console.log('value search ----> ', search)
+                if (search.trim() === '') {
+                    showListStdent();
+                    return;
+                }
+                for (let i = 0; i < listStudents.length; i++) {
+                    if (search.toLowerCase() === listStudents[i].toLowerCase()) {
+                        listSearch.push(listStudents[i])
+                    }
+                }
+                showListSearch();
+            }
+        </script>
+</body>
+</html>
